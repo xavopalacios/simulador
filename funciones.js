@@ -25,8 +25,8 @@ function calcularCuotaMensual(total,plazoAnios){
 
 function aprobarCredito(capacidadPago, cuotaMensual) {
     if (capacidadPago >= cuotaMensual) {
-        return "CERDITO APROBADO";
+        return "CREDITO APROBADO";
     } 
-        return "CERDITO RECHAZADO";
+        return "CREDITO RECHAZADO";
     }
 
