@@ -1,0 +1,319 @@
+Aquí tienes una propuesta de diseño de alto nivel, alineada con la identidad visual de Produbanco (Grupo Promerica). He optimizado la interfaz para que sea totalmente responsiva (perfecta para móviles) y he aplicado una paleta de colores profesional: verde institucional, gris oscuro y detalles en dorado/limón.
+He utilizado Google Fonts (Inter) y Font Awesome para los iconos, dándole ese acabado de sistema bancario moderno.
+HTML Renovado
+He estructurado mejor los grupos de datos y añadido los contenedores para los logos y los iconos.
+html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Crédito | Produbanco</title>
+    <!-- Google Fonts e Iconos -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link rel="stylesheet" href="simulador.css">
+    <script src="funciones.js"></script>
+    <script src="simulador.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="brand-logos">
+                <img src="https://produbanco.com.ec" alt="Produbanco Logo" class="logo-main">
+            </div>
+            <h1>Simulador de Crédito <span>Grupo Promerica</span></h1>
+        </header>
+
+        <section class="card">
+            <h2><i class="fa-solid fa-wallet"></i> Datos financieros</h2>
+            <div class="input-group">
+                <label for="txtIngresos">Ingresos mensuales 💵</label>
+                <input type="number" id="txtIngresos" placeholder="0.00">
+            </div>
+
+            <div class="input-group">
+                <label for="txtEgresos">Egresos mensuales 📉</label>
+                <input type="number" id="txtEgresos" placeholder="0.00">
+            </div>
+
+            <div class="results-grid">
+                <p>Disponible: <span id="spnDisponible">$0.00</span></p>
+                <p>Capacidad pago: <span id="spnCapacidadPago">$0.00</span></p>
+            </div>
+        </section>
+
+        <section class="card secondary">
+            <h2><i class="fa-solid fa-hand-holding-dollar"></i> Solicitud de crédito</h2>
+            <div class="input-group">
+                <label for="txtMonto">Monto solicitado 💰</label>
+                <input type="number" id="txtMonto" placeholder="Ej: 5000">
+            </div>
+
+            <div class="row">
+                <div class="input-group">
+                    <label for="txtPlazo">Plazo (años) ⏳</label>
+                    <input type="number" id="txtPlazo" placeholder="Ej: 3">
+                </div>
+                <div class="input-group">
+                    <label for="txtTasaInteres">Tasa Interés % 📊</label>
+                    <input type="number" id="txtTasaInteres" placeholder="12">
+                </div>
+            </div>
+
+            <div class="final-summary">
+                <div class="summary-item">Interés: <span id="spnInteresPagar">-</span></div>
+                <div class="summary-item">Total Préstamo: <span id="spnTotalPrestamo">-</span></div>
+                <div class="summary-item highlight">Cuota mensual: <span id="spnCuotaMensual">-</span></div>
+            </div>
+
+            <div class="status-box">
+                <p>Estado: <span id="spnEstadoCredito">ESPERANDO DATOS...</span></p>
+            </div>
+        </section>
+
+        <div class="buttons">
+            <button id="btnCalcularCredito" class="btn-primary" onclick="calcular()">
+                <i class="fa-solid fa-calculator"></i> Calcular
+            </button>
+            <button id="btnReiniciar" class="btn-secondary">
+                <i class="fa-solid fa-rotate-right"></i> Reiniciar
+            </button>
+        </div>
+
+        <footer>
+            <img src="https://promerica.com.ec" alt="Grupo Promerica" class="logo-group">
+        </footer>
+    </div>
+
+</body>
+</html>
+Usa el código con precaución.
+CSS Profesional (simulador.css)
+Este código utiliza variables para mantener la consistencia de la marca y flexbox para que se vea perfecto en móviles.
+css
+:root {
+    --green-produbanco: #007a33; /* Verde Institucional */
+    --green-light: #8dc63f;     /* Verde Limón Promerica */
+    --dark-grey: #333333;
+    --light-grey: #f8f9fa;
+    --white: #ffffff;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #eef2f3;
+    margin: 0;
+    padding: 20px;
+    color: var(--dark-grey);
+}
+
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    background: transparent;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.brand-logos {
+    margin-bottom: 15px;
+}
+
+.logo-main {
+    height: 45px;
+}
+
+h1 {
+    font-size: 22px;
+    color: var(--green-produbanco);
+    margin: 0;
+    font-weight: 700;
+}
+
+h1 span {
+    display: block;
+    font-size: 12px;
+    color: var(--green-light);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Estilo de Tarjetas */
+.card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    border-top: 4px solid var(--green-produbanco);
+}
+
+.card.secondary {
+    border-top: 4px solid var(--green-light);
+}
+
+h2 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--green-produbanco);
+}
+
+/* Formularios */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #666;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px; /* Evita zoom automático en iOS */
+    transition: border 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--green-produbanco);
+    background-color: #f0fff4;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Resultados */
+.results-grid {
+    display: flex;
+    justify-content: space-between;
+    background: var(--light-grey);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.final-summary {
+    background: #fdfdfd;
+    border: 1px dashed #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.highlight {
+    font-weight: 700;
+    color: var(--green-produbanco);
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
+.status-box {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    background: #333;
+    color: white;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+#spnEstadoCredito {
+    color: var(--green-light);
+    letter-spacing: 1px;
+}
+
+/* Botones */
+.buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+button {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: transform 0.1s, background 0.3s;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    background-color: var(--green-produbanco);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #ddd;
+    color: var(--dark-grey);
+}
+
+footer {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.logo-group {
+    height: 25px;
+    opacity: 0.7;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 400px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+}
+Usa el código con precaución.
+¿Qué mejoras apliqué?
+Identidad Corporativa: Usé el verde #007a33 (Produbanco) como color principal y el verde limón para acentos.
+Iconografía: Integré Font Awesome para que el usuario identifique visualmente cada sección (billetera, calculadora, etc.).
+UX Móvil: Los inputs tienen un tamaño de fuente de 16px para evitar que los iPhones hagan zoom automático al escribir. Los botones son grandes y fáciles de presionar ("thumb-friendly").
+Jerarquía Visual: Los resultados importantes (Cuota mensual) tienen un peso visual mayor que los datos de entrada.
+Separación: Dividí el formulario en dos tarjetas (card) para no abrumar al usuario con demasiados campos a la vez.
+Para que funcione, asegúrate de que tu archivo de estilos se llame simulador.css y que tengas conexión a internet para cargar los logos y fuentes. ¿Quieres que ajuste algún color específico o añada alguna validación visual extra?

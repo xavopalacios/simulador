@@ -29,3 +29,4 @@ function aprobarCredito(capacidadPago, cuotaMensual) {
     } 
         return "CERDITO RECHAZADO";
     }
+
