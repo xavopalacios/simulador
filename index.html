@@ -16,71 +16,87 @@
     <div class="container">
         <header>
             <div class="brand-logos">
-                <img src="produbanco.png" alt="Produbanco Logo" class="logo-main">
+                <img src="https://produbanco.com.ec" alt="Produbanco Logo" class="logo-main">
             </div>
             <h1>Simulador de Crédito <span>Grupo Promerica</span></h1>
         </header>
 
-        <section class="card">
-            <h2><i class="fa-solid fa-wallet"></i> Datos financieros</h2>
-            <div class="input-group">
-                <label for="txtIngresos">Ingresos mensuales 💵</label>
-                <input type="number" id="txtIngresos" placeholder="0.00">
-            </div>
-
-            <div class="input-group">
-                <label for="txtEgresos">Egresos mensuales 📉</label>
-                <input type="number" id="txtEgresos" placeholder="0.00">
-            </div>
-
-            <div class="results-grid">
-                <p>Disponible: <span id="spnDisponible">$0.00</span></p>
-                <p>Capacidad pago: <span id="spnCapacidadPago">$0.00</span></p>
-            </div>
-        </section>
-
-        <section class="card secondary">
-            <h2><i class="fa-solid fa-hand-holding-dollar"></i> Solicitud de crédito</h2>
-            <div class="input-group">
-                <label for="txtMonto">Monto solicitado 💰</label>
-                <input type="number" id="txtMonto" placeholder="Ej: 5000">
-            </div>
-
-            <div class="row">
+        <!-- Agregamos la clase "form-simulador" y capturamos el submit -->
+        <form class="form-simulador" onsubmit="calcular(); return false;">
+            
+            <section class="card">
+                <h2><i class="fa-solid fa-wallet"></i> Datos financieros</h2>
+                
                 <div class="input-group">
-                    <label for="txtPlazo">Plazo (años) ⏳</label>
-                    <input type="number" id="txtPlazo" placeholder="Ej: 3">
+                    <label for="txtIngresos">Ingresos mensuales 💵</label>
+                    <input type="number" id="txtIngresos" min="1" step="0.01" required placeholder="0.00">
+                    <span class="mensaje-error">⚠️ Ingrese un monto válido mayor a 0</span>
                 </div>
+
                 <div class="input-group">
-                    <label for="txtTasaInteres">Tasa Interés % 📊</label>
-                    <input type="number" id="txtTasaInteres" placeholder="12">
+                    <label for="txtEgresos">Egresos mensuales 📉</label>
+                    <input type="number" id="txtEgresos" min="0" step="0.01" required placeholder="0.00">
+                    <span class="mensaje-error">⚠️ Ingrese un egreso válido (mínimo 0)</span>
                 </div>
-            </div>
 
-            <div class="final-summary">
-                <div class="summary-item">Interés: <span id="spnInteresPagar">-</span></div>
-                <div class="summary-item">Total Préstamo: <span id="spnTotalPrestamo">-</span></div>
-                <div class="summary-item highlight">Cuota mensual: <span id="spnCuotaMensual">-</span></div>
-            </div>
+                <div class="results-grid">
+                    <p>Disponible: <span id="spnDisponible">$0.00</span></p>
+                    <p>Capacidad pago: <span id="spnCapacidadPago">$0.00</span></p>
+                </div>
+            </section>
 
-            <div class="status-box">
-                <p>Estado: <span id="spnEstadoCredito">ESPERANDO DATOS...</span></p>
-            </div>
-        </section>
+            <section class="card secondary">
+                <h2><i class="fa-solid fa-hand-holding-dollar"></i> Solicitud de crédito</h2>
+                
+                <div class="input-group">
+                    <label for="txtMonto">Monto solicitado 💰</label>
+                    <!-- Límites de Produbanco -->
+                    <input type="number" id="txtMonto" min="300" max="50000" required placeholder="Entre $300 y $50,000">
+                    <span class="mensaje-error">⚠️ El monto debe estar entre $300 y $50,000</span>
+                </div>
 
-        <div class="buttons">
-            <button id="btnCalcularCredito" class="btn-primary" onclick="calcular()">
-                <i class="fa-solid fa-calculator"></i> Calcular
-            </button>
-            <button id="btnReiniciar" class="btn-secondary" onclick="limpiar()">
-                <i class="fa-solid fa-rotate-right"></i> Reiniciar
-            </button>
-        </div>
+                <div class="row">
+                    <div class="input-group">
+                        <label for="txtPlazo">Plazo (años) ⏳</label>
+                        <!-- Límites de 1 a 5 años -->
+                        <input type="number" id="txtPlazo" min="1" max="5" required placeholder="1 a 5">
+                        <span class="mensaje-error">⚠️ Plazo entre 1 y 5 años</span>
+                    </div>
+                    <div class="input-group">
+                        <label for="txtTasaInteres">Tasa Interés % 📊</label>
+                        <!-- Tasa legal máxima en Ecuador -->
+                        <input type="number" id="txtTasaInteres" min="1" max="16.77" step="0.01" required placeholder="Máx 16.77%">
+                        <span class="mensaje-error">⚠️ Tasa inválida (Máx 16.77%)</span>
+                    </div>
+                </div>
+
+                <div class="final-summary">
+                    <div class="summary-item">Interés: <span id="spnInteresPagar">-</span></div>
+                    <div class="summary-item">Total Préstamo: <span id="spnTotalPrestamo">-</span></div>
+                    <div class="summary-item highlight">Cuota mensual: <span id="spnCuotaMensual">-</span></div>
+                </div>
+
+                <div class="status-box">
+                    <p>Estado: <span id="spnEstadoCredito">ESPERANDO DATOS...</span></p>
+                </div>
+            </section>
+
+            <!-- Cambiamos el botón a type="submit" para activar la validación nativa -->
+            <div class="buttons">
+                <button type="submit" id="btnCalcularCredito" class="btn-primary">
+                    <i class="fa-solid fa-calculator"></i> Calcular Crédito
+                </button>
+                <button type="button" id="btnReiniciar" class="btn-secondary" onclick="window.location.reload();">
+                    <i class="fa-solid fa-rotate-right"></i> Reiniciar
+                </button>
+            </div>
+        </form>
 
         <footer>
-            <img src="promerican.png" alt="Grupo Promerica" class="logo-group">
+            <img src="https://promerica.com.ec" alt="Grupo Promerica" class="logo-group">
         </footer>
     </div>
 
 </body>
 </html>
+

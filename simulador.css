@@ -214,3 +214,59 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Agregue esto a su simulador.css anterior */
+
+/* Ocultar mensajes de error por defecto */
+.mensaje-error {
+    display: none;
+    font-size: 11px;
+    color: #ff4d4d;
+    font-weight: 600;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Cuando un campo sea inválido y el usuario haya interactuado con él */
+input:invalid:not(:placeholder-shown) {
+    border-color: #ff4d4d !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Mostrar el texto de error solo si el input adyacente es inválido */
+input:invalid:not(:placeholder-shown) + .mensaje-error {
+    display: block;
+}
+
+/* Animación de entrada para los textos de error */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ocultar mensajes de error por defecto */
+.mensaje-error {
+    display: none;
+    font-size: 11px;
+    color: #ff4d4d;
+    font-weight: 600;
+    margin-top: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Solo cuando el formulario sea "inválido" y se intente disparar el botón Calcular */
+.form-simulador:invalid input:invalid {
+    border-color: #ff4d4d !important;
+    background-color: #fff5f5 !important;
+}
+
+/* Muestra el mensaje de error correspondiente solo al presionar Calcular si el input es inválido */
+.form-simulador:invalid input:invalid + .mensaje-error {
+    display: block;
+}
+
+/* Animación sutil de entrada para los textos de error */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-3px); }
+    to { opacity: 1; transform: translateY(0); }
+}
