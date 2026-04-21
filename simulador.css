@@ -270,3 +270,19 @@ input:invalid:not(:placeholder-shown) + .mensaje-error {
     from { opacity: 0; transform: translateY(-3px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* Oculta los mensajes por defecto */
+.mensaje-error {
+    display: none;
+    color: #d9534f;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+/* Muestra el mensaje solo si el input es inválido después de intentar enviar */
+input:invalid {
+    border-color: #d9534f;
+}
+
+input:invalid + .mensaje-error {
+    display: block;
+}

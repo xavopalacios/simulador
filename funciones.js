@@ -29,4 +29,6 @@ function aprobarCredito(capacidadPago, cuotaMensual) {
     } 
         return "CREDITO RECHAZADO";
     }
-
+function gastosTotales(arriendo, alimentacion, varios) {
+    return arriendo + alimentacion + varios;
+}
